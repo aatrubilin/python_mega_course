@@ -13,10 +13,12 @@ def translate(w, confidence=0.8):
     w = w.lower()
     if w in data:
         return data[w]
-    elif ww := get_close_matches(w, data.keys(), n=1, cutoff=confidence):
-        ww = ww[0]
-        if confirm(f"Did you mean '{ww}' instead?"):
-            return data[ww]
+    else:
+        ww = get_close_matches(w, data.keys(), n=1, cutoff=confidence)
+        if ww:
+            ww = ww[0]
+            if confirm(f"Did you mean '{ww}' instead?"):
+                return data[ww]
 
     return f"The word '{w}' doesn't exist, please double check it'"
 
